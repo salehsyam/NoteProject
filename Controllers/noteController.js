@@ -21,29 +21,21 @@ exports.getAllNotes = (req, res) =>{
     return res.status(200).send(JSON.stringify(values));
 
 }
-exports.saveLogin = function (req, res){ 
-    console.log(req.body);
-    res.send('welcome, ' + req.body.username)
-  }
 exports.saveNote = (req , res) => {
-
-
-    res.send('welcome, ' + req.body.username)
-
-    // console.log(req.body.title);
+    var seqId   = generator.generate();
+    var createdBy = "admin";
+    var createdOn = new Date();
     // req.body
-    // var title = req.body.title;
-
-
-    // var content = req.body.content;
-    // if(!title || !content){
-    //     return res.status(500).send({ error: 'Title and Content should not be empty' })
-    // }
+    var title = req.body.title;
+    var content = req.body.content;
+    if(!title || !content){
+        return res.status(500).send({ error: 'Title and Content should not be empty' })
+    }
     
-    // var Note = model.Note;
-    // var noteObj = new Note(seqId , title , content , createdBy , createdOn);
-    // memStorage.store.setItem(seqId , noteObj);
-    // return res.status(201).send("Successfully note saved ");
+    var Note = model.Note;
+    var noteObj = new Note(seqId , title , content , createdBy , createdOn);
+    memStorage.store.setItem(seqId , noteObj);
+    return res.status(201).send("Successfully note saved ");
 }
 
 exports.updateNote = (req , res) => {
