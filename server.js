@@ -7,23 +7,17 @@ let port = 3000;
 const NoteRoute =require("./routes/noteRoute");
 
 
-app.use(cors());
 
-app.use('/',NoteRoute);
+app.use(cors())
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+ 
+// parse application/json
+app.use(bodyParser.json());
 
-app.use(require('connect').bodyParser());
-app.use(express.bodyParser());
+app.use("/api/v1" , NoteRoute);
 
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({extended:true}))
-
-
-
-// POST /login gets urlencoded bodies
-app.post('/login',function (req, res) {
-    res.send('welcome, ' + req.body.username)
-  })
 
 
 app.listen(port,()=>{
